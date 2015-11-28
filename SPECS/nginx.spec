@@ -37,17 +37,18 @@ if [ ${ret} -lt 1 ]
 
 %post
 %bin_dir/systemctl daemon-reload
-%bin_dir/systemctl enable nginx.service
+%bin_dir/systemctl enable nginx.service 2>/dev/null
 %bin_dir/systemctl start  nginx.service
 
 %preun
-%bin_dir/systemctl disable nginx.service
+%bin_dir/systemctl disable nginx.service 2>/dev/null
 %bin_dir/systemctl stop  nginx.service
 
 %postun
 %__rm -rf %nginx_prefix
 %__rm -f %_unitdir/nginx.service
 %__rm -f %_sysconfdir/logrotate.d/nginx
+%__rm -f %_usr/local/bin/nginx
 
 %build
 export DESTDIR=%buildroot
@@ -87,6 +88,11 @@ export DESTDIR=%buildroot
 %bin_dir/find %buildroot/%nginx_prefix -type f -exec %__chmod 0644 {} \; -exec %__chown %name:%name {} \;
 %bin_dir/find %buildroot/%nginx_prefix -type d -exec %__chmod 0755 {} \; -exec %__chown %name:%name {} \;
 %__chmod 0755 %buildroot/%nginx_prefix/sbin/nginx
+
+if [ ! -h %_usr/local/bin/nginx ]
+  then
+    %__ln_s %nginx_prefix/sbin/nginx %_usr/local/bin/nginx
+  fi
 
 %files
 %nginx_prefix/sbin/nginx
