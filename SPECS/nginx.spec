@@ -8,7 +8,7 @@ License: BSD
 Source:  http://nginx.org/download/nginx-1.8.0.tar.gz
 Source1: ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
 Source2: http://zlib.net/zlib-1.2.8.tar.gz
-Source3: https://www.openssl.org/source/openssl-1.0.2d.tar.gz
+Source3: https://www.openssl.org/source/openssl-1.0.2e.tar.gz
 Group: System Environment/Daemons
 
 %description
@@ -71,7 +71,7 @@ export DESTDIR=%buildroot
 --group=%name \
 --with-http_ssl_module \
 --with-openssl-opt=enable-tlsext \
---with-openssl=%_builddir/openssl-1.0.2d
+--with-openssl=%_builddir/openssl-1.0.2e
 
 %install
 %make_install
