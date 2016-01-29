@@ -50,8 +50,6 @@ if [ ${ret} -lt 1 ]
 %__rm -f %_usr/local/bin/nginx
 
 %build
-export DESTDIR=%buildroot
-
 ./configure \
 --prefix=%nginx_prefix \
 --with-http_gzip_static_module \
