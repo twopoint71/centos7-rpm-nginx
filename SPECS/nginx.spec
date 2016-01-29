@@ -1,14 +1,14 @@
 Summary: nginx high performance web server
 Name: nginx
-Version: 1.8.0
-Release: 1.el7
+Version: 1.8.1
+Release: 3.el7
 # BSD License (two clause)
 # http://www.freebsd.org/copyright/freebsd-license.html
 License: BSD
-Source:  http://nginx.org/download/nginx-1.8.0.tar.gz
+Source:  http://nginx.org/download/nginx-1.8.1.tar.gz
 Source1: ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
 Source2: http://zlib.net/zlib-1.2.8.tar.gz
-Source3: https://www.openssl.org/source/openssl-1.0.2e.tar.gz
+Source3: https://www.openssl.org/source/openssl-1.0.2f.tar.gz
 Group: System Environment/Daemons
 
 %description
@@ -38,11 +38,11 @@ if [ ${ret} -lt 1 ]
 %post
 %bin_dir/systemctl daemon-reload
 %bin_dir/systemctl enable nginx.service 2>/dev/null
-%bin_dir/systemctl start  nginx.service
+%bin_dir/systemctl start nginx.service
 
 %preun
 %bin_dir/systemctl disable nginx.service 2>/dev/null
-%bin_dir/systemctl stop  nginx.service
+%bin_dir/systemctl stop nginx.service
 
 %postun
 %__rm -rf %nginx_prefix
@@ -71,7 +71,7 @@ export DESTDIR=%buildroot
 --group=%name \
 --with-http_ssl_module \
 --with-openssl-opt=enable-tlsext \
---with-openssl=%_builddir/openssl-1.0.2e
+--with-openssl=%_builddir/openssl-1.0.2f
 
 %install
 %make_install
@@ -79,6 +79,8 @@ export DESTDIR=%buildroot
 %__install -p -m 0755 -d %buildroot/%nginx_prefix/logs
 %__install -p -m 0755 -d %buildroot/%nginx_prefix/ssl
 %__install -p -m 0755 -d %buildroot/%nginx_prefix/cache
+%__install -p -m 0755 -d %buildroot/%nginx_prefix/sites-available
+%__install -p -m 0755 -d %buildroot/%nginx_prefix/sites-enabled
 
 # nabbed and modified from the el7 nginx rpm in the epel repo
 # thanks Jamie Nguyen
@@ -118,6 +120,8 @@ if [ ! -h %_usr/local/bin/nginx ]
 %dir %nginx_prefix/logs
 %dir %nginx_prefix/ssl
 %dir %nginx_prefix/cache
+%dir %nginx_prefix/sites-available
+%dir %nginx_prefix/sites-enabled
 
 # append --define 'noclean 1' to rpmbuild if desired to keep the buildroot directory
 # shamelessly nabbed from
