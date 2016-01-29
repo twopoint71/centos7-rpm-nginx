@@ -2,9 +2,9 @@ Summary: nginx high performance web server
 Name: nginx
 Version: 1.8.1
 Release: 3.el7
-# BSD License (two clause)
-# http://www.freebsd.org/copyright/freebsd-license.html
-License: BSD
+# MIT License
+# http://opensource.org/licenses/MIT
+License: MIT
 Source:  http://nginx.org/download/nginx-1.8.1.tar.gz
 Source1: ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
 Source2: http://zlib.net/zlib-1.2.8.tar.gz
