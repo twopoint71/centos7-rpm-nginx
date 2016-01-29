@@ -9,7 +9,6 @@ Source:  http://nginx.org/download/nginx-1.8.1.tar.gz
 Source1: ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
 Source2: http://zlib.net/zlib-1.2.8.tar.gz
 Source3: https://www.openssl.org/source/openssl-1.0.2f.tar.gz
-Group: System Environment/Daemons
 
 %description
 The nginx-filesystem package contains the basic directory layout
