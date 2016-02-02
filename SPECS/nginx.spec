@@ -84,14 +84,19 @@ if [ ${ret} -lt 1 ]
 %__install -p -m 0644 -o root -g root -D %_sourcedir/nginxtras/nginx.service %buildroot/%_unitdir/nginx.service
 %__install -p -m 0644 -D %_sourcedir/nginxtras/nginx.logrotate %buildroot/%_sysconfdir/logrotate.d/nginx
 
+# add custom nginx config
+%__install -p -m 0644 -o nginx -g nginx -D %_sourcedir/nginxtras/nginx.conf %buildroot/%nginx_prefix/conf/nginx.conf
+%__install -p -m 0644 -o nginx -g nginx -D %_sourcedir/nginxtras/vhost.example.conf %buildroot/%nginx_prefix/sites-available/vhost.example.conf
+%__ln_s %nginx_prefix/sites-available/vhost.example.conf %buildroot/%nginx_prefix/sites-enabled/vhost.example.conf
+
+# add binary symlink to /usr/local/bin
+%__install -p -m 0755 -o root -g root -d %buildroot/%_prefix/local/bin
+%__ln_s %nginx_prefix/sbin/nginx %buildroot/%_prefix/local/bin/nginx
+
+# adjust permissions
 %bin_dir/find %buildroot/%nginx_prefix -type f -exec %__chmod 0644 {} \; -exec %__chown %name:%name {} \;
 %bin_dir/find %buildroot/%nginx_prefix -type d -exec %__chmod 0755 {} \; -exec %__chown %name:%name {} \;
 %__chmod 0755 %buildroot/%nginx_prefix/sbin/nginx
-
-if [ ! -h %_usr/local/bin/nginx ]
-  then
-    %__ln_s %nginx_prefix/sbin/nginx %_usr/local/bin/nginx
-  fi
 
 %files
 %nginx_prefix/sbin/nginx
@@ -110,6 +115,9 @@ if [ ! -h %_usr/local/bin/nginx ]
 %config(noreplace) %nginx_prefix/conf/uwsgi_params
 %config(noreplace) %nginx_prefix/conf/uwsgi_params.default
 %config(noreplace) %nginx_prefix/conf/win-utf
+%config(noreplace) %nginx_prefix/sites-available/vhost.example.conf
+%config(noreplace) %nginx_prefix/sites-enabled/vhost.example.conf
+%config(noreplace) %_prefix/local/bin/nginx
 %config(noreplace) %_sysconfdir/logrotate.d/nginx
 %nginx_prefix/html/50x.html
 %nginx_prefix/html/index.html
