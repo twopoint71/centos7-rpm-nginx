@@ -1,7 +1,7 @@
 Summary: nginx high performance web server
 Name: nginx
 Version: 1.8.1
-Release: 3.el7
+Release: 4.el7
 # MIT License
 # http://opensource.org/licenses/MIT
 License: MIT
