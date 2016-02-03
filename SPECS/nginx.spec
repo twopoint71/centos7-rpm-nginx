@@ -1,7 +1,7 @@
 Summary: nginx high performance web server
 Name: nginx
 Version: 1.8.1
-Release: 6.el7
+Release: 7.el7
 # MIT License
 # http://opensource.org/licenses/MIT
 License: MIT
@@ -42,9 +42,11 @@ if [ ${ret} -lt 1 ]
 %preun
 %bin_dir/systemctl disable nginx.service 2>/dev/null
 %bin_dir/systemctl stop nginx.service
-%__mv -f %nginx_prefix/html/index.html %nginx_prefix/html/index.html.rpmsave
-%__mv -f %nginx_prefix/conf/nginx.conf %nginx_prefix/conf/nginx.conf.rpmsave
-%__mv -f %nginx_prefix/sites-available/vhost.example.conf %nginx_prefix/sites-available/vhost.example.conf.rpmsave
+
+# preserve configs and index.html
+%__cp -f %nginx_prefix/html/index.html %nginx_prefix/html/index.html.rpmsave
+%__cp -f %nginx_prefix/conf/nginx.conf %nginx_prefix/conf/nginx.conf.rpmsave
+%__cp -f %nginx_prefix/sites-available/vhost.example.conf %nginx_prefix/sites-available/vhost.example.conf.rpmsave
 
 %postun
 for i in cache logs sbin ssl
