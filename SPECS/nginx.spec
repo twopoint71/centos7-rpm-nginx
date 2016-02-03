@@ -1,7 +1,7 @@
 Summary: nginx high performance web server
 Name: nginx
 Version: 1.8.1
-Release: 4.el7
+Release: 6.el7
 # MIT License
 # http://opensource.org/licenses/MIT
 License: MIT
@@ -42,9 +42,15 @@ if [ ${ret} -lt 1 ]
 %preun
 %bin_dir/systemctl disable nginx.service 2>/dev/null
 %bin_dir/systemctl stop nginx.service
+%__mv -f %nginx_prefix/html/index.html %nginx_prefix/html/index.html.rpmsave
+%__mv -f %nginx_prefix/conf/nginx.conf %nginx_prefix/conf/nginx.conf.rpmsave
+%__mv -f %nginx_prefix/sites-available/vhost.example.conf %nginx_prefix/sites-available/vhost.example.conf.rpmsave
 
 %postun
-%__rm -rf %nginx_prefix
+for i in cache logs sbin ssl
+  do
+    %__rm -rf %nginx_prefix/${i}
+  done
 %__rm -f %_unitdir/nginx.service
 %__rm -f %_sysconfdir/logrotate.d/nginx
 %__rm -f %_usr/local/bin/nginx
@@ -93,6 +99,10 @@ if [ ${ret} -lt 1 ]
 %__install -p -m 0755 -o root -g root -d %buildroot/%_prefix/local/bin
 %__ln_s %nginx_prefix/sbin/nginx %buildroot/%_prefix/local/bin/nginx
 
+# add custom html / php files
+%__install -p -m 0644 -o nginx -g nginx -D %_sourcedir/nginxtras/index.html %buildroot/%nginx_prefix/html/index.html
+%__install -p -m 0644 -o nginx -g nginx -D %_sourcedir/nginxtras/php-test.php %buildroot/%nginx_prefix/html/php-test.php
+
 # adjust permissions
 %bin_dir/find %buildroot/%nginx_prefix -type f -exec %__chmod 0644 {} \; -exec %__chown %name:%name {} \;
 %bin_dir/find %buildroot/%nginx_prefix -type d -exec %__chmod 0755 {} \; -exec %__chown %name:%name {} \;
@@ -120,7 +130,8 @@ if [ ${ret} -lt 1 ]
 %config(noreplace) %_prefix/local/bin/nginx
 %config(noreplace) %_sysconfdir/logrotate.d/nginx
 %nginx_prefix/html/50x.html
-%nginx_prefix/html/index.html
+%config(noreplace) %nginx_prefix/html/index.html
+%nginx_prefix/html/php-test.php
 %_unitdir/nginx.service
 %dir %nginx_prefix/logs
 %dir %nginx_prefix/ssl
