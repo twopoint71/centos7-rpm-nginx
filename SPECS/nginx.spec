@@ -1,11 +1,11 @@
 Summary: nginx high performance web server
 Name: nginx
-Version: 1.8.1
-Release: 8.el7
+Version: 1.10.0
+Release: 9.el7
 # MIT License
 # http://opensource.org/licenses/MIT
 License: MIT
-Source:  http://nginx.org/download/nginx-1.8.1.tar.gz
+Source:  http://nginx.org/download/nginx-1.10.0.tar.gz
 Source1: ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
 Source2: http://zlib.net/zlib-1.2.8.tar.gz
 Source3: https://www.openssl.org/source/openssl-1.0.2h.tar.gz
@@ -61,7 +61,7 @@ for i in cache logs sbin ssl
 ./configure \
 --prefix=%nginx_prefix \
 --with-http_gzip_static_module \
---with-http_spdy_module \
+--with-http_v2_module \
 --with-http_stub_status_module \
 --with-ipv6 \
 --with-file-aio \
