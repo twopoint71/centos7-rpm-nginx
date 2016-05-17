@@ -1,14 +1,14 @@
 Summary: nginx high performance web server
 Name: nginx
 Version: 1.8.1
-Release: 7.el7
+Release: 8.el7
 # MIT License
 # http://opensource.org/licenses/MIT
 License: MIT
 Source:  http://nginx.org/download/nginx-1.8.1.tar.gz
 Source1: ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
 Source2: http://zlib.net/zlib-1.2.8.tar.gz
-Source3: https://www.openssl.org/source/openssl-1.0.2f.tar.gz
+Source3: https://www.openssl.org/source/openssl-1.0.2h.tar.gz
 
 %description
 The nginx-filesystem package contains the basic directory layout
@@ -76,7 +76,7 @@ for i in cache logs sbin ssl
 --group=%name \
 --with-http_ssl_module \
 --with-openssl-opt=enable-tlsext \
---with-openssl=%_builddir/openssl-1.0.2f
+--with-openssl=%_builddir/openssl-1.0.2h
 
 %install
 %make_install
