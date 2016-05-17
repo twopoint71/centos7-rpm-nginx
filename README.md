@@ -6,6 +6,10 @@
 <p>Should work seamlessly on RHEL 7 and Scientific Linux 7.<br>
 <p>Big thanks to some old posts at stackoverflow and the EPEL nginx package maintainer Jamie Nguyen.</p>
 
+<h3>about</h3>
+<p>This install puts all things nginx in the /etc/nginx directory.  Including logs, confs, the binary, all of it.</p>
+<p>This comes from an old habit.  I know this should rightfully be in /usr, but . . . old habits.</p>
+
 <p>Quick RPM Build Cheat</p>
 ```
 rpmbuild -ba nginx.spec
