@@ -1,3 +1,6 @@
+## ARCHIVE NOTICE
+Since CentOS 7 is pretty far from use these days, marking this project as archived for historical reference only.
+
 <h2>nginx rpm spec file & some nginxtras</h2>
 
 <h3>nginx custom rpm build for CentOS 7</h3>
